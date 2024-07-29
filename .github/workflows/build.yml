@@ -14,6 +14,7 @@ jobs:
       - name: build
         env:
           MAKE_JOBS: 2
+          CIBW_ARCHS: all
         run: |
           export PATH=/usr/local/bin:$PATH
           export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
