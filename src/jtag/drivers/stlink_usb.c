@@ -3746,6 +3746,7 @@ static int stlink_open(struct hl_interface_param_s *param, enum stlink_mode mode
 
 	if (err != ERROR_OK) {
 		LOG_ERROR("init mode failed (unable to connect to the target)");
+		exit(1);
 		goto error_open;
 	}
 

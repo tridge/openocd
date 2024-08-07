@@ -166,12 +166,8 @@ static int at32x_get_product_id(struct flash_bank *bank, uint32_t *product_id)
 
 static int at32x_get_flash_size(struct flash_bank *bank, uint16_t *flash_size_in_kb)
 {
-	struct target *target = bank->target;
-	int retval;
-	retval = target_read_u16(target, AT32_FLASH_SIZE_ADDR, flash_size_in_kb);
-	if (retval != ERROR_OK)
-		return retval;
-	return retval;
+	*flash_size_in_kb = 64;
+	return ERROR_OK;
 }
 
 
@@ -409,6 +405,10 @@ static int at32_get_device_info(struct flash_bank *bank)
 			at32x_info->sector_num = (at32x_info->flash_size << 10) / at32x_info->sector_size;
 			at32x_info->bank_size = at32x_info->flash_size << 10;		
 		}
+		at32x_info->sector_size = 1024;
+		at32x_info->sector_num = 64;
+		at32x_info->flash_size = 64;
+		at32x_info->bank_size = 64*1024;
 		at32x_info->probed = 1;
 		LOG_INFO("main flash size: 0x%" PRIx32 ", sector num:  0x%" PRIx32 ", sector size: 0x%" PRIx32 ",  bank size: 0x%" PRIx32 "", 
 				 (at32x_info->flash_size << 10),  at32x_info->sector_num,  at32x_info->sector_size, at32x_info->bank_size);
@@ -952,7 +952,7 @@ static int at32x_probe(struct flash_bank *bank)
 		return retval;
 
 	/* calculate numbers of pages */
-	int num_pages = at32x_info->sector_num;
+	int num_pages = 64; // at32x_info->sector_num;
 
 	/* check that calculation result makes sense */
 	assert(num_pages > 0);
