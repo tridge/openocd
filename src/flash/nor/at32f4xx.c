@@ -745,6 +745,8 @@ static int at32x_protect(struct flash_bank *bank, int set, unsigned int first, u
 		return retval;
 	}
 
+	at32x_info->usd_data.fap = set?0x00:0xA5;
+
 	for (unsigned int i = first; i <= last; i++) {
 		if (set)
 			at32x_info->usd_data.protection &= ~(1 << i);

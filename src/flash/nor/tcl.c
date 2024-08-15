@@ -1028,8 +1028,10 @@ COMMAND_HANDLER(handle_flash_verify_bank_command)
 		for (t = 0; t < length; t++) {
 			if (buffer_flash[t] == buffer_file[t])
 				continue;
+#if 0
 			command_print(CMD, "diff %d address 0x%08" PRIx32 ". Was 0x%02x instead of 0x%02x",
 					diffs, t + offset, buffer_flash[t], buffer_file[t]);
+#endif
 			if (diffs++ >= 127) {
 				command_print(CMD, "More than 128 errors, the rest are not printed.");
 				break;

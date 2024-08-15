@@ -1086,10 +1086,11 @@ static int stm32l4_write_one_wrpxy(struct flash_bank *bank, struct stm32l4_wrp *
 {
 	struct stm32l4_flash_bank *stm32l4_info = bank->driver_priv;
 
-	int wrp_start = wrpxy->first - wrpxy->offset;
-	int wrp_end = wrpxy->last - wrpxy->offset;
+	//int wrp_start = wrpxy->first - wrpxy->offset;
+	//int wrp_end = wrpxy->last - wrpxy->offset;
 
-	uint32_t wrp_value = (wrp_start & stm32l4_info->wrpxxr_mask) | ((wrp_end & stm32l4_info->wrpxxr_mask) << 16);
+	uint32_t wrp_value = 0; // (wrp_start & stm32l4_info->wrpxxr_mask) | ((wrp_end & stm32l4_info->wrpxxr_mask) << 16);
+	LOG_DEBUG("wrp_value 0x%08x", wrp_value);
 
 	return stm32l4_write_option(bank, stm32l4_info->flash_regs[wrpxy->reg_idx], wrp_value, 0xffffffff);
 }
